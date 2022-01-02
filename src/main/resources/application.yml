@@ -1,0 +1,19 @@
+spring:
+  cloud:
+    gateway:
+      routes:
+      - id: servicio-productos
+        uri: lb://servicio-productos
+        predicates:        - Path=/api/productos/**
+        filters: #StripPrefix = 2 porque esta formada la url por dos bloques: api y productos        - StripPrefix=2
+        - name: Ejemplo
+          args:
+            mensaje: Hola mi mensaje
+            cookieNombre: usuario
+            cookieValor: Pablo           
+      - id: servicio-items
+        uri: lb://servicio-items
+        predicates:
+        - Path=/api/items/**
+        filters:
+        - StripPrefix=2              
