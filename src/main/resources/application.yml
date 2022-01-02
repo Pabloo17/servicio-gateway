@@ -5,6 +5,13 @@ spring:
       - id: servicio-productos
         uri: lb://servicio-productos
         predicates:        - Path=/api/productos/**
+        #Condiciones que tiene que cumplir la request
+        #- Header= token, \d+
+        #- Method=GET, POST
+        #- Query=color, verde
+        #Para cualquier tipo de color
+        #- Query=color
+        #- Cookie=color, azul
         filters: #StripPrefix = 2 porque esta formada la url por dos bloques: api y productos        - StripPrefix=2
         - name: Ejemplo
           args:
@@ -16,4 +23,9 @@ spring:
         predicates:
         - Path=/api/items/**
         filters:
-        - StripPrefix=2              
+        - StripPrefix=2
+        #Añadir cabeceras personalizadas
+        - AddRequestHeader=token-request, 123456
+        - AddResponseHeader=token-response, 12345678
+       # - SetResponseHeader=Content-Type, text/plain
+        - AddRequestParameter=nombre, pablo            
